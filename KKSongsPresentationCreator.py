@@ -92,8 +92,8 @@ class KKSongsPresentationCreator:
             
             verse = "\n".join(lyrics[start:end]).strip()
             
-            slide = prs.slides.add_slide(prs.slide_layouts[1])
-            textbox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(5.5))
+            slide = prs.slides.add_slide(prs.slide_layouts[0])
+            textbox = slide.shapes.add_textbox(Inches(1), Inches(2.5), Inches(8), Inches(5.5))
             text_frame = textbox.text_frame
             text_frame.text = verse
 
@@ -103,8 +103,7 @@ class KKSongsPresentationCreator:
                 paragraph.font.color.rgb = RGBColor(0, 0, 0)
 
             text_frame.word_wrap = True
-            textbox.left = Inches(1)
-            textbox.top = Inches(1.5)
+
         
         if translations:
             slide = prs.slides.add_slide(prs.slide_layouts[1])

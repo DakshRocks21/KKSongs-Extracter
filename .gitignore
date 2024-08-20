@@ -1,6 +1,5 @@
 venv/
-starter.pptx
-*.pptx
 __pycache__
 .env
 .vscode/
+extracted/
