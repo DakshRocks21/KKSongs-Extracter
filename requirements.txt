@@ -1,0 +1,8 @@
+Flask
+Flask-WTF
+Flask-Bcrypt
+python-pptx
+beautifulsoup4
+requests
+lxml
+python-dotenv
