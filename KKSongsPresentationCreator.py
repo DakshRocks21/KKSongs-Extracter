@@ -18,8 +18,10 @@ class KKSongsPresentationCreator:
     @staticmethod
     def clean_text(text):
         text = text.replace('_x000D_', '')
+        text = text.replace('', "")
         text = text.replace('\r', '')
         text = re.sub(r'\s+', ' ', text)
+        text = re.sub(r'\\x[0-9A-Fa-f]{2}', '', text)
         return text.strip()
 
     def extract_title(self, html_content):
@@ -106,26 +108,33 @@ class KKSongsPresentationCreator:
 
         
         if translations:
-            slide = prs.slides.add_slide(prs.slide_layouts[1])
-            textbox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(5.5))
-            text_frame = textbox.text_frame
+            # slide = prs.slides.add_slide(prs.slide_layouts[1])
+            # textbox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(5.5))
+            # text_frame = textbox.text_frame
 
-            p = text_frame.add_paragraph()
-            p.text = "Translations"
-            p.font.size = Pt(36)
-            p.font.bold = True
+            # p = text_frame.add_paragraph()
+            # p.text = "Translations"
+            # p.font.size = Pt(36)
+            # p.font.bold = True
 
             split_trans = self.split_translations(translations)
+            print(split_trans)
             for translation in split_trans:
+                slide = prs.slides.add_slide(prs.slide_layouts[1])
+                textbox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(5.5))
+                text_frame = textbox.text_frame
+
+                p = text_frame.add_paragraph()
+                p.text = "Translations"
+                p.font.size = Pt(36)
+                p.font.bold = True
                 p = text_frame.add_paragraph()
                 p.text = translation.strip()
                 p.font.size = Pt(28)
                 p.alignment = PP_ALIGN.LEFT
                 p.space_after = Pt(10)
 
-            text_frame.word_wrap = True
-            textbox.left = Inches(1)
-            textbox.top = Inches(1.5)
+                text_frame.word_wrap = True
 
         prs.save(output_file)
 
