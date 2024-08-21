@@ -4,21 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Presentation Creator</title>
+    <title>Create Song Presentation</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-
     <div class="w-full max-w-lg">
         <h1 class="text-4xl font-bold text-center mb-8">Create Song Presentation</h1>
         <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
                 <label for="url" class="block text-gray-700 text-sm font-bold mb-2">Enter the URL of the song:</label>
-                <input type="text" id="url" name="url" required
+                <input type="text" id="url" name="url"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div class="flex items-center justify-between">
+            <div class="mb-4">
+                <label for="search-query" class="block text-gray-700 text-sm font-bold mb-2">Or select a song from the
+                    list:</label>
+                <input type="text" id="search-query" placeholder="Search songs..."
+                    class="mb-4 p-2 border rounded w-full">
+            </div>
+            <ul id="song-list" class="list-disc pl-5 max-h-60 overflow-y-scroll">
+                {% for song in songs %}
+                <li class="song-item">
+                    <button type="submit" name="song_url" value="{{ song.url }}" class="text-blue-500">{{ song.title
+                        }}</button>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="flex items-center justify-between mt-4">
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Create Presentation
@@ -33,6 +46,16 @@
         {% endif %}
     </div>
 
+    <script>
+        document.getElementById('search-query').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            const listItems = document.querySelectorAll('#song-list .song-item');
+            listItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    </script>
 </body>
 
 </html>
